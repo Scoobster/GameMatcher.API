@@ -1,0 +1,12 @@
+D:\Software Projects\GameMatcher\GameMatcherAPI\GameMatcher.EntityFramework\bin\Debug\GameMatcher.EntityFramework.dll.config
+D:\Software Projects\GameMatcher\GameMatcherAPI\GameMatcher.EntityFramework\bin\Debug\GameMatcher.EntityFramework.dll
+D:\Software Projects\GameMatcher\GameMatcherAPI\GameMatcher.EntityFramework\bin\Debug\GameMatcher.EntityFramework.pdb
+D:\Software Projects\GameMatcher\GameMatcherAPI\GameMatcher.EntityFramework\bin\Debug\EntityFramework.dll
+D:\Software Projects\GameMatcher\GameMatcherAPI\GameMatcher.EntityFramework\bin\Debug\EntityFramework.SqlServer.dll
+D:\Software Projects\GameMatcher\GameMatcherAPI\GameMatcher.EntityFramework\bin\Debug\EntityFramework.xml
+D:\Software Projects\GameMatcher\GameMatcherAPI\GameMatcher.EntityFramework\bin\Debug\EntityFramework.SqlServer.xml
+D:\Software Projects\GameMatcher\GameMatcherAPI\GameMatcher.EntityFramework\obj\Debug\GameMatcher.EntityFramework.csprojAssemblyReference.cache
+D:\Software Projects\GameMatcher\GameMatcherAPI\GameMatcher.EntityFramework\obj\Debug\GameMatcher.EntityFramework.csproj.CoreCompileInputs.cache
+D:\Software Projects\GameMatcher\GameMatcherAPI\GameMatcher.EntityFramework\obj\Debug\GameMatcher.EntityFramework.csproj.CopyComplete
+D:\Software Projects\GameMatcher\GameMatcherAPI\GameMatcher.EntityFramework\obj\Debug\GameMatcher.EntityFramework.dll
+D:\Software Projects\GameMatcher\GameMatcherAPI\GameMatcher.EntityFramework\obj\Debug\GameMatcher.EntityFramework.pdb
