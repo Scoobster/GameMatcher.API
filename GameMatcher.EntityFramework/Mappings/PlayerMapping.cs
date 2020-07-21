@@ -19,8 +19,9 @@ namespace GameMatcher.EntityFramework.Mappings
             Property(x => x.FirstName).HasColumnName("first_name").IsRequired();
             Property(x => x.LastName).HasColumnName("last_name").IsRequired();
             Property(x => x.ClubId).HasColumnName("club_id").IsRequired();
-            Property(x => x.Ability).HasColumnName("ability").IsRequired();
-            Property(x => x.PhoneNumber).HasColumnName("phone").IsOptional();
+            Property(x => x.Ability).HasColumnName("ability_level").IsRequired();
+            Property(x => x.PhoneNumber).HasColumnName("phone_number").IsOptional();
+            Property(x => x.DeviceToken).HasColumnName("device_token").IsOptional();
 
             HasRequired(x => x.Club).WithMany(x => x.Players).HasForeignKey(x => x.ClubId);
         }

@@ -15,6 +15,7 @@ namespace GameMatcher.EntityFramework.Models
         public int ClubId { get; set; }
         public short Ability { get; set; }
         public string PhoneNumber { get; set; }
+        public string DeviceToken { get; set; }
 
         public virtual Club Club { get; set; }
         public virtual ICollection<MatchRequest> MatchRequests { get; set; }

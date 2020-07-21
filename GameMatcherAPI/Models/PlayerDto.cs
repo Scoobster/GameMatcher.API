@@ -14,6 +14,7 @@ namespace GameMatcherAPI.Models
         public int ClubId { get; set; }
         public short Ability { get; set; }
         public string PhoneNumber { get; set; }
+        public string DeviceToken { get; set; }
 
         public static Player MapPlayerDtoToPlayer(PlayerDto playerDto)
         {
@@ -24,6 +25,7 @@ namespace GameMatcherAPI.Models
                 ClubId = playerDto.ClubId,
                 Ability = playerDto.Ability,
                 PhoneNumber = playerDto.PhoneNumber,
+                DeviceToken = playerDto.DeviceToken
             };
             if (playerDto.Id.HasValue) player.Id = playerDto.Id.Value;
             return player;

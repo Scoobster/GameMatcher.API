@@ -62,7 +62,7 @@
     <Compile Include="Models\Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\GameMatcherDataContext.cs" />
-    <Compile Include="Services\GameMatcherDataService.cs" />
+    <Compile Include="Services\PlayerDataService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

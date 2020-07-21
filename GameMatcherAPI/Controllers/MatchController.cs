@@ -12,13 +12,13 @@ namespace GameMatcherAPI.Controllers
     [RoutePrefix("api/match")]
     public class MatchController : ApiController
     {
-        private readonly GameMatcherDataService DataService = new GameMatcherDataService();
+        //private readonly PlayerDataService DataService = new PlayerDataService();
 
-        [HttpGet]
-        [Route("player/{id}")]
-        public List<MatchConfirmed> GetConfirmedMatches(int playerId)
-        {
-            return DataService.GetMatchesForPlayer(playerId);
-        }
+        //[HttpGet]
+        //[Route("player/{playerId}")]
+        //public List<MatchConfirmed> GetConfirmedMatches(int playerId)
+        //{
+            //return DataService.GetMatchesForPlayer(playerId);
+        //}
     }
 }

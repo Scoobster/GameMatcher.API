@@ -12,7 +12,7 @@ namespace GameMatcher.EntityFramework.Repositories
     public class GameMatcherDataContext: DbContext
     {
         public GameMatcherDataContext(): 
-            base("Data Source=localhost;Initial Catalog=GAME_MATCHER_DEV;Integrated Security=True")
+            base("Data Source=gamematcher.database.windows.net;Initial Catalog=GAME_MATCHER_DEV;Persist Security Info=True;User ID=andrew;Password=Scooby!1")
         { }
 
         public DbSet<Club> Clubs { get; set; }

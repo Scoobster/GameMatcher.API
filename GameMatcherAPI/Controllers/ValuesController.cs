@@ -16,7 +16,7 @@ namespace GameMatcherAPI.Controllers
         [Route("get-values")]
         public IEnumerable<string> GetValues()
         {
-            var dataService = new GameMatcherDataService();
+            var dataService = new PlayerDataService();
             //dataService.Initialise();
             return new string[] { "value1", "value2" };
         }
