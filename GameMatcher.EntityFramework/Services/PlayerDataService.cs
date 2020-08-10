@@ -24,6 +24,22 @@ namespace GameMatcher.EntityFramework.Services
                 .FirstOrDefault(p => p.Id == playerId);
         }
 
+        public Player UpdatePlayer(int playerId, Player playerDetails)
+        {
+            Player player = dbContext.Players
+                .FirstOrDefault(p => p.Id == playerId);
+
+            player.FirstName = playerDetails.FirstName;
+            player.LastName = playerDetails.LastName;
+            player.ClubId = playerDetails.ClubId;
+            player.Ability = playerDetails.Ability;
+            player.PhoneNumber = playerDetails.PhoneNumber;
+
+            dbContext.SaveChanges();
+
+            return GetPlayer(playerId);
+        }
+
         public int AddPlayer(Player player)
         {
             dbContext.Players.Add(player);
@@ -36,91 +52,36 @@ namespace GameMatcher.EntityFramework.Services
             Player player = dbContext.Players.FirstOrDefault(p => p.Id == playerId);
             player.DeviceToken = token;
             dbContext.SaveChanges();
-            return player.DeviceToken;
+            return dbContext.Players.FirstOrDefault(p => p.Id == playerId).DeviceToken;
         }
 
-        //public MatchRequest GetMatchRequest(int requestId)
-        //{
-        //    return dbContext.MatchRequests
-        //        .AsNoTracking()
-        //        .FirstOrDefault(m => m.Id == requestId);
-        //}
+        public IQueryable<Player> GetPlayersFromClub(int clubId)
+        {
+            return dbContext.Players
+                .AsNoTracking()
+                .Where(p => p.ClubId == clubId);
+        }
 
-        //public MatchConfirmed GetMatch(int matchId)
-        //{
-        //    return dbContext.ConfirmedMatches
-        //        .AsNoTracking()
-        //        .FirstOrDefault(m => m.Id == matchId);
-        //}
+        public Player GetPlayerWithMatches(int playerId)
+        {
+            return dbContext.Players
+                .AsNoTracking()
+                .Include("MatchRequests")
+                .Include("ConfirmedMatchesAsHost")
+                .Include("ConfirmedMatchesAsGuest")
+                .FirstOrDefault(p => p.Id == playerId);
+        }
 
-        //public List<MatchRequest> GetMatchRequests(DateTime startTime, DateTime endTime)
-        //{
-        //    return dbContext.MatchRequests
-        //        .AsNoTracking()
-        //        .Where(m => (m.MatchStartTime >= startTime) && (m.MatchStartTime <= endTime))
-        //        .ToList();
-        //}
-
-        //public List<MatchRequest> GetMatchRequestsForPlayer(int playerId)
-        //{
-        //    return dbContext.MatchRequests
-        //        .AsNoTracking()
-        //        .Where(m => m.HostPlayerId == playerId)
-        //        .ToList();
-        //}
-
-        //public List<MatchConfirmed> GetMatchesForPlayer(int playerId)
-        //{
-        //    return dbContext.ConfirmedMatches
-        //        .AsNoTracking()
-        //        .Where(m => m.HostPlayerId == playerId || m.GuestPlayerId == playerId)
-        //        .ToList();
-        //}
-
-        //public int AddClub(Club club)
-        //{
-        //    dbContext.Clubs.Add(club);
-        //    dbContext.SaveChanges();
-        //    return club.Id;
-        //}
-
-        //public int AddMatchRequest(MatchRequest request)
-        //{
-        //    dbContext.MatchRequests.Add(request);
-        //    dbContext.SaveChanges();
-        //    return request.Id;
-        //}
-
-        //public List<Player> GetListOfPlayersForRequestSending(int requestId)
-        //{
-        //    MatchRequest request = dbContext.MatchRequests
-        //        .FirstOrDefault(m => m.Id == requestId);
-        //    return dbContext.Players
-        //        .AsNoTracking().
-        //        Where(p => p.ClubId == request.HostPlayer.ClubId &&
-        //            p.Ability <= request.HostPlayer.Ability + 1 && p.Ability >= request.HostPlayer.Ability - 1)
-        //        .ToList();
-        //}
-
-        //public int ConfirmMatch(int requestId, int guestPlayerId)
-        //{
-        //    var guestPlayer = dbContext.Players.FirstOrDefault(p => p.Id == guestPlayerId);
-        //    var request = dbContext.MatchRequests.FirstOrDefault(m => m.Id == requestId);
-
-        //    MatchConfirmed match = new MatchConfirmed
-        //    {
-        //        HostPlayer = request.HostPlayer,
-        //        MatchStartTime = request.MatchStartTime,
-        //        LengthInMins = request.LengthInMins,
-        //        GuestPlayer = guestPlayer
-        //    };
-
-        //    dbContext.MatchRequests.Remove(request);
-        //    dbContext.ConfirmedMatches.Add(match);
-
-        //    dbContext.SaveChanges();
-
-        //    return match.Id;
-        //}
+        public List<MatchRequest> GetMatchRequestsAvailableForPlayer(int playerId)
+        {
+            short playerAbility = GetPlayer(playerId).Ability;
+            return dbContext.MatchRequests
+                .AsNoTracking()
+                .Include("HostPlayer")
+                .Where(request => request.HostPlayerId != playerId)
+                .Where(request => (request.MinAbility.HasValue ? request.MinAbility.Value <= playerAbility : request.HostPlayer.Ability - 1 <= playerAbility)
+                    && (request.MaxAbility.HasValue ? request.MinAbility.Value >= playerAbility : request.HostPlayer.Ability + 1 >= playerAbility))
+                .ToList();
+        }
     }
 }

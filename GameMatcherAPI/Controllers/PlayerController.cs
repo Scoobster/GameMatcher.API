@@ -16,7 +16,7 @@ namespace GameMatcherAPI.Controllers
     [RoutePrefix("api/player")]
     public class PlayerController : ApiController
     {
-        private readonly PlayerDataService DataService = new PlayerDataService();
+        private readonly PlayerDataService dataService = new PlayerDataService();
 
         [Route("{playerId}")]
         [HttpGet]
@@ -24,9 +24,25 @@ namespace GameMatcherAPI.Controllers
         {
             try
             {
-                Player player = DataService.GetPlayer(playerId);
+                Player player = dataService.GetPlayer(playerId);
                 return PlayerDto.MapPlayerToPlayerDto(player);
-            } catch (Exception e)
+            }
+            catch (Exception e)
+            {
+                throw HandleException(e);
+            }
+        }
+
+        [Route("{playerId}")]
+        [HttpPost]
+        public PlayerDto GetPlayer(int playerId, PlayerDto playerDetails)
+        {
+            try
+            {
+                Player player = dataService.UpdatePlayer(playerId, PlayerDto.MapPlayerDtoToPlayer(playerDetails));
+                return PlayerDto.MapPlayerToPlayerDto(player);
+            }
+            catch (Exception e)
             {
                 throw HandleException(e);
             }
@@ -38,7 +54,7 @@ namespace GameMatcherAPI.Controllers
         {
             try
             {
-                return DataService.AddPlayer(PlayerDto.MapPlayerDtoToPlayer(player));
+                return dataService.AddPlayer(PlayerDto.MapPlayerDtoToPlayer(player));
             } catch (Exception e)
             {
                 throw HandleException(e);
@@ -47,15 +63,56 @@ namespace GameMatcherAPI.Controllers
 
         [Route("token/{playerId}")]
         [HttpPost]
-        public string UpdateDeviceToken(int playerId, [FromBody]string token)
+        public string UpdateDeviceToken(int playerId, [FromBody] string token)
         {
             try
             {
-                return DataService.UpdateDeviceToken(playerId, token);
-            } catch (Exception e)
+                return dataService.UpdateDeviceToken(playerId, token);
+            }
+            catch (Exception e)
             {
                 throw HandleException(e);
             }
+        }
+
+        [Route("match/{playerId}")]
+        [HttpGet]
+        public MatchListDto GetAllMatches(int playerId)
+        {
+            try
+            {
+                Player player = dataService.GetPlayerWithMatches(playerId);
+
+                List<MatchConfirmedDto> matchesConfirmed = player.ConfirmedMatches
+                    .Select(m => MatchConfirmedDto.MapToDto(m))
+                    .OrderBy(m => m.MatchStartTime)
+                    .ToList();
+
+                List<MatchRequestDto> matchRequests = player.MatchRequests
+                    .Select(m => MatchRequestDto.MapMatchRequestToMatchRequestDto(m))
+                    .OrderBy(m => m.MatchStartTime)
+                    .ToList();
+
+                return new MatchListDto
+                {
+                    MatchesConfirmed = matchesConfirmed,
+                    MatchRequests = matchRequests
+                };
+            }
+            catch (Exception e)
+            {
+                throw HandleException(e);
+            }
+        }
+
+        [Route("request/{playerId}")]
+        [HttpGet]
+        public List<MatchRequestDto> GetAvailableMatchRequests(int playerId)
+        {
+            List<MatchRequest> matchRequests = dataService.GetMatchRequestsAvailableForPlayer(playerId);
+            return matchRequests
+                .Select(request => MatchRequestDto.MapMatchRequestToMatchRequestDto(request))
+                .ToList();
         }
 
         private HttpResponseException HandleException(Exception e)

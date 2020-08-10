@@ -12,7 +12,7 @@ namespace GameMatcher.EntityFramework.Models
         public int HostPlayerId { get; set; }
         public int GuestPlayerId { get; set; }
         public DateTime? Created { get; set; }
-        public DateTime MatchStartTime { get; set; }
+        public DateTime? MatchStartTime { get; set; }
         public int LengthInMins { get; set; }
 
         public virtual Player HostPlayer { get; set; }

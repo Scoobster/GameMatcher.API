@@ -16,7 +16,7 @@ namespace GameMatcher.EntityFramework.Mappings
             ToTable("MatchRequest").HasKey(x => x.Id);
 
             Property(x => x.Id).HasColumnName("id").HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity).IsRequired();
-            Property(x => x.HostPlayerId).HasColumnName("player_host_id").IsRequired();
+            Property(x => x.HostPlayerId).HasColumnName("host_player_id").IsRequired();
             Property(x => x.MatchStartTime).HasColumnName("match_time").IsRequired();
             Property(x => x.LengthInMins).HasColumnName("length").IsRequired();
             Property(x => x.MinAbility).HasColumnName("ability_min").IsOptional();

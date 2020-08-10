@@ -11,7 +11,7 @@ namespace GameMatcher.EntityFramework.Models
         public int Id { get; set; }
         public int HostPlayerId { get; set; }
         public DateTime? Created { get; set; }
-        public DateTime MatchStartTime { get; set; }
+        public DateTime? MatchStartTime { get; set; }
         public int LengthInMins { get; set; }
         public short? MinAbility { get; set; }
         public short? MaxAbility { get; set; }

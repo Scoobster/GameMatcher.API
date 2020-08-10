@@ -13,7 +13,7 @@ namespace GameMatcher.EntityFramework.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public string Sport { get; set; }
-        public int NumOfCourts { get; set; }
+        public short NumOfCourts { get; set; }
 
         public virtual ICollection<Player> Players { get; set; }
     }

@@ -24,6 +24,10 @@ namespace GameMatcher.EntityFramework.Mappings
             Property(x => x.DeviceToken).HasColumnName("device_token").IsOptional();
 
             HasRequired(x => x.Club).WithMany(x => x.Players).HasForeignKey(x => x.ClubId);
+            HasMany(x => x.ConfirmedMatchesAsHost).WithRequired(x => x.HostPlayer).HasForeignKey(x => x.HostPlayerId);
+            HasMany(x => x.ConfirmedMatchesAsGuest).WithRequired(x => x.GuestPlayer).HasForeignKey(x => x.GuestPlayerId);
+
+            Ignore(x => x.ConfirmedMatches);
         }
     }
 }
